@@ -1,0 +1,1070 @@
+-- Valentina Studio --
+-- MySQL dump --
+-- ---------------------------------------------------------
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+-- ---------------------------------------------------------
+
+
+-- CREATE TABLE "catalog_options" ------------------------------
+CREATE TABLE `catalog_options` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`value` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`label` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`catalog_id` Int( 10 ) UNSIGNED NOT NULL,
+	`deleted_at` Timestamp NULL,
+	`created_at` Timestamp NULL,
+	`updated_at` Timestamp NULL,
+	PRIMARY KEY ( `id` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "catalogs" -------------------------------------
+CREATE TABLE `catalogs` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`name` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`description` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`deleted_at` Timestamp NULL,
+	`created_at` Timestamp NULL,
+	`updated_at` Timestamp NULL,
+	PRIMARY KEY ( `id` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "conditions" -----------------------------------
+CREATE TABLE `conditions` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`visible` TinyInt( 1 ) NOT NULL DEFAULT 0,
+	`condition_value` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+	`operator` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+	`question_id` Int( 10 ) UNSIGNED NOT NULL,
+	`created_at` Timestamp NULL,
+	`updated_at` Timestamp NULL,
+	PRIMARY KEY ( `id` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 1;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "declarations" ---------------------------------
+CREATE TABLE `declarations` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`type` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`status` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`current_section` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`target_date` Timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	`user_id` Int( 10 ) UNSIGNED NOT NULL,
+	`deleted_at` Timestamp NULL,
+	`created_at` Timestamp NULL,
+	`updated_at` Timestamp NULL,
+	PRIMARY KEY ( `id` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 2;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "migrations" -----------------------------------
+CREATE TABLE `migrations` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`migration` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`batch` Int( 11 ) NOT NULL,
+	PRIMARY KEY ( `id` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 11;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "password_resets" ------------------------------
+CREATE TABLE `password_resets` ( 
+	`username` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`token` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`created_at` Timestamp NULL )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "questions" ------------------------------------
+CREATE TABLE `questions` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`index` Int( 11 ) NOT NULL DEFAULT 100,
+	`type` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`content` LongText CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`catalog_id` Int( 10 ) UNSIGNED NULL,
+	`is_parent` TinyInt( 1 ) NOT NULL DEFAULT 0,
+	`is_private` TinyInt( 1 ) NOT NULL DEFAULT 0,
+	`min` Int( 11 ) NOT NULL DEFAULT 0,
+	`max` Int( 11 ) NOT NULL DEFAULT 100,
+	`parent_id` Int( 10 ) UNSIGNED NULL,
+	`disabled` TinyInt( 1 ) NOT NULL DEFAULT 0,
+	`prop_linked` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+	`columns` Int( 11 ) NOT NULL DEFAULT 6,
+	`status` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`required` TinyInt( 1 ) NOT NULL,
+	`deleted_at` Timestamp NULL,
+	`created_at` Timestamp NULL,
+	`updated_at` Timestamp NULL,
+	PRIMARY KEY ( `id` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 5;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "section_question" -----------------------------
+CREATE TABLE `section_question` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`section_id` Int( 10 ) UNSIGNED NULL,
+	`question_id` Int( 10 ) UNSIGNED NOT NULL,
+	`created_at` Timestamp NULL,
+	`updated_at` Timestamp NULL,
+	PRIMARY KEY ( `id` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 14;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "sections" -------------------------------------
+CREATE TABLE `sections` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`index` Int( 11 ) NOT NULL DEFAULT 100,
+	`name` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`declaration_type` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'INICIAL',
+	`slug` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`deleted_at` Timestamp NULL,
+	`created_at` Timestamp NULL,
+	`updated_at` Timestamp NULL,
+	PRIMARY KEY ( `id` ),
+	CONSTRAINT `sections_slug_unique` UNIQUE( `slug` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 6;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "user_declarations" ----------------------------
+CREATE TABLE `user_declarations` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`question_id` Int( 10 ) UNSIGNED NOT NULL,
+	`value` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`declaration_id` Int( 10 ) UNSIGNED NOT NULL,
+	`deleted_at` Timestamp NULL,
+	`created_at` Timestamp NULL,
+	`updated_at` Timestamp NULL,
+	PRIMARY KEY ( `id` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 2;
+-- -------------------------------------------------------------
+
+
+-- CREATE TABLE "users" ----------------------------------------
+CREATE TABLE `users` ( 
+	`id` Int( 10 ) UNSIGNED AUTO_INCREMENT NOT NULL,
+	`username` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`name` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`firstname` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`lastname` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+	`type` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'admin',
+	`user_verified_at` Timestamp NULL,
+	`password` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+	`remember_token` VarChar( 100 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+	`deleted_at` Timestamp NULL,
+	`created_at` Timestamp NULL,
+	`updated_at` Timestamp NULL,
+	`disabled` TinyInt( 1 ) NOT NULL DEFAULT 0,
+	`prop_linked` VarChar( 255 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+	PRIMARY KEY ( `id` ),
+	CONSTRAINT `users_username_unique` UNIQUE( `username` ) )
+CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_unicode_ci
+ENGINE = InnoDB
+AUTO_INCREMENT = 3;
+-- -------------------------------------------------------------
+
+
+-- Dump data of "catalog_options" --------------------------
+INSERT INTO `catalog_options`(`id`,`value`,`label`,`catalog_id`,`deleted_at`,`created_at`,`updated_at`) VALUES 
+( '1', 'FEDERAL', 'Federal', '1', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '2', 'ESTATAL', 'Estatal', '1', NULL, '2019-10-04 10:18:55', '2019-10-04 10:18:55' ),
+( '3', 'MUNICIPAL', 'Municipal', '1', NULL, '2019-10-04 10:19:22', '2019-10-04 10:19:22' ),
+( '4', 'CERTIFICADO', 'Certificado', '2', NULL, '2019-10-04 10:20:27', '2019-10-04 10:20:27' ),
+( '5', 'CONSTANCIA', 'Constancia', '2', NULL, '2019-10-04 10:20:38', '2019-10-04 10:20:38' ),
+( '6', 'BOLETA', 'Boleta', '2', NULL, '2019-10-04 10:20:54', '2019-10-04 10:20:54' ),
+( '7', 'TITULO', 'Titulo', '2', NULL, '2019-10-04 10:21:05', '2019-10-04 10:21:05' ),
+( '8', 'AS', 'Aguascalientes', '3', NULL, '2019-10-04 10:22:16', '2019-10-04 10:22:16' ),
+( '9', 'CASADO (A)', 'Casado (a)', '4', NULL, '2019-10-04 10:24:42', '2019-10-04 10:24:42' ),
+( '10', 'DIVORCIADO (A)', 'Divorciado (a)', '4', NULL, '2019-10-04 10:25:09', '2019-10-04 10:25:09' ),
+( '11', 'SOLTERO (A)', 'Soltero (a)', '4', NULL, '2019-10-04 10:25:32', '2019-10-04 10:25:32' ),
+( '12', 'UNION LIBRE', 'Union libre', '4', NULL, '2019-10-04 10:25:51', '2019-10-04 10:25:51' ),
+( '13', 'VIUDO (A)', 'Viudo (a)', '4', NULL, '2019-10-04 10:26:20', '2019-10-04 10:26:20' ),
+( '14', 'CURSANDO', 'Cursando', '5', NULL, '2019-10-04 10:27:13', '2019-10-04 10:27:13' ),
+( '15', 'FINALIZADO', 'Finalizado', '5', NULL, '2019-10-04 10:27:24', '2019-10-04 10:27:24' ),
+( '16', 'TRUNCO', 'Trunco', '5', NULL, '2019-10-04 10:27:40', '2019-10-04 10:27:40' ),
+( '17', 'SF', 'S/F', '6', NULL, '2019-10-04 10:28:40', '2019-10-04 10:28:40' ),
+( '18', 'CONTADO', 'Contado', '6', NULL, '2019-10-04 10:28:54', '2019-10-04 10:28:54' ),
+( '19', 'CREDITO', 'Crédito', '6', NULL, '2019-10-04 10:29:07', '2019-10-04 10:29:07' ),
+( '20', 'CESION', 'Cesión', '6', NULL, '2019-10-04 10:29:27', '2019-10-04 10:29:27' ),
+( '21', 'DONACION', 'Donación', '6', NULL, '2019-10-04 10:29:41', '2019-10-04 10:29:41' ),
+( '22', 'HERENCIA', 'Herencia', '6', NULL, '2019-10-04 10:29:54', '2019-10-04 10:29:54' ),
+( '23', 'TRASPASO', 'Traspaso', '6', NULL, '2019-10-04 10:30:10', '2019-10-04 10:30:10' ),
+( '24', 'PERMUTA', 'Permuta', '6', NULL, '2019-10-04 10:30:22', '2019-10-04 10:30:22' ),
+( '25', 'RIFA SORTEO', 'Rifa o sorteo', '6', NULL, '2019-10-04 10:30:40', '2019-10-04 10:30:40' ),
+( '26', 'BANCARIA', 'Bancaria', '7', NULL, '2019-10-04 10:32:03', '2019-10-04 10:32:03' ),
+( '27', 'VALORES BURSATILES', 'Valores bursatiles', '7', NULL, '2019-10-04 10:32:22', '2019-10-04 10:32:22' ),
+( '28', 'FONDOS DE INVERSION', 'Fondos de inversión', '7', NULL, '2019-10-04 10:32:37', '2019-10-04 10:32:37' ),
+( '29', 'ORGANIZACIONES PRIVADAS', 'Organizaciones privadas', '7', NULL, '2019-10-04 10:32:55', '2019-10-04 10:32:55' ),
+( '30', 'POSESION DE MONEDAS Y METALES', 'Posesión de monedas y metales', '7', NULL, '2019-10-04 10:33:28', '2019-10-04 10:33:28' ),
+( '31', 'SEGURO DE SEPARACION INDIVIDUALIZADO', 'Seguro de separación individualizado', '7', NULL, '2019-10-04 10:34:11', '2019-10-04 10:34:11' ),
+( '32', 'OTROS', 'Otros', '7', NULL, '2019-10-04 10:34:20', '2019-10-04 10:34:20' ),
+( '33', 'CAPITAL', 'Capital', '7', NULL, '2019-10-04 10:34:41', '2019-10-04 10:34:41' ),
+( '34', 'ORGANISMO DE AGUA', 'Organismo de agua', '8', NULL, '2019-10-04 10:36:02', '2019-10-04 10:36:02' ),
+( '35', 'DIF MUNICIPAL', 'Dif municipal', '8', NULL, '2019-10-04 10:36:22', '2019-10-04 10:36:22' ),
+( '36', 'AGUASCALIENTES', 'Aguascalientes', '9', NULL, '2019-10-04 10:37:30', '2019-10-04 10:37:30' ),
+( '38', 'PRIMARIA', 'Primaria', '11', NULL, '2019-10-04 11:58:35', '2019-10-04 11:58:35' ),
+( '39', 'SECUNDARIA', 'Secundaria', '11', NULL, '2019-10-04 11:58:49', '2019-10-04 11:58:49' ),
+( '40', 'BACHILLERATO', 'Bachillerato', '11', NULL, '2019-10-04 11:59:04', '2019-10-04 11:59:04' ),
+( '41', 'CARRERA TECNICA O COMERCIAL', 'Carrera técnica o comercial', '11', NULL, '2019-10-04 11:59:40', '2019-10-04 11:59:40' ),
+( '42', 'LICENCIATURA', 'Licenciatura', '11', NULL, '2019-10-04 12:00:00', '2019-10-04 12:00:00' ),
+( '43', 'DIPLOMADO', 'Diplomado', '11', NULL, '2019-10-04 12:00:17', '2019-10-04 12:00:17' ),
+( '44', 'MAESTRIA', 'Maestria', '11', NULL, '2019-10-04 12:00:31', '2019-10-04 12:00:31' ),
+( '45', 'DOCTORADO', 'Doctorado', '11', NULL, '2019-10-04 12:00:44', '2019-10-04 12:00:44' ),
+( '46', 'POSGRADO', 'Posgrado', '11', NULL, '2019-10-04 12:00:57', '2019-10-04 12:00:57' ),
+( '48', 'ABUELO (A)', 'Abuelo (a)', '13', NULL, '2019-10-04 12:02:42', '2019-10-04 12:02:42' ),
+( '49', 'AHIJADO(A)', 'Ahijado (a)', '13', NULL, '2019-10-04 12:03:00', '2019-10-04 12:03:00' ),
+( '50', 'CONCUBINA', 'Concubina', '13', NULL, '2019-10-04 12:03:51', '2019-10-04 12:03:51' ),
+( '51', 'CONCUBINARIO', 'Concubinario', '13', NULL, '2019-10-04 12:04:10', '2019-10-04 12:04:10' ),
+( '52', 'CONYUGE', 'Conyuge', '13', NULL, '2019-10-04 12:04:25', '2019-10-04 12:04:25' ),
+( '53', 'CUÑADO (A)', 'Cuñado (a)', '13', NULL, '2019-10-04 12:04:38', '2019-10-04 12:04:38' ),
+( '54', 'HERMANO(A)', 'Hermano (a)', '13', NULL, '2019-10-04 12:04:57', '2019-10-04 12:04:57' ),
+( '55', 'HIJO (A)', 'Hijo (a)', '13', NULL, '2019-10-04 12:07:41', '2019-10-04 12:07:41' ),
+( '56', 'MADRE', 'Madre', '13', NULL, '2019-10-04 12:07:58', '2019-10-04 12:07:58' ),
+( '57', 'NIETO (A)', 'Nieto (a)', '13', NULL, '2019-10-04 12:08:21', '2019-10-04 12:08:21' ),
+( '58', 'PADRE', 'Padre', '13', NULL, '2019-10-04 12:08:39', '2019-10-04 12:08:39' ),
+( '59', 'SOBRINO(A)', 'Sobrino (a)', '13', NULL, '2019-10-04 12:09:07', '2019-10-04 12:09:07' ),
+( '60', 'SUEGRO (A)', 'Suegro (a)', '13', NULL, '2019-10-04 12:09:39', '2019-10-04 12:09:39' ),
+( '61', 'TIO (A)', 'Tio (a)', '13', NULL, '2019-10-04 12:09:59', '2019-10-04 12:09:59' ),
+( '62', 'SIN PARENTESCO', 'Sin parentesco', '13', NULL, '2019-10-04 12:10:22', '2019-10-04 12:10:22' ),
+( '63', 'AÑO', 'Año', '14', NULL, '2019-10-04 12:11:43', '2019-10-04 12:11:43' ),
+( '64', 'BIMESTRES', 'Bimestres', '14', NULL, '2019-10-04 12:12:01', '2019-10-04 12:12:01' ),
+( '65', 'CUATRIMESTRES', 'Cuatrimestres', '14', NULL, '2019-10-04 12:12:20', '2019-10-04 12:12:20' ),
+( '66', 'MESES', 'Meses', '14', NULL, '2019-10-04 12:12:36', '2019-10-04 12:12:36' ),
+( '67', 'SEMESTRES', 'Semestres', '14', NULL, '2019-10-04 12:13:08', '2019-10-04 12:13:08' ),
+( '68', 'TRIMESTRES', 'Trimestres', '14', NULL, '2019-10-04 12:13:27', '2019-10-04 12:13:27' ),
+( '69', 'EJECUTIVO', 'Ejecutivo', '15', NULL, '2019-10-04 12:15:04', '2019-10-04 12:15:04' ),
+( '70', 'LEGISLATIVO', 'Legislativo', '15', NULL, '2019-10-04 12:15:26', '2019-10-04 12:15:26' ),
+( '71', 'JUDICIAL', 'Judicial', '15', NULL, '2019-10-04 12:15:46', '2019-10-04 12:15:46' ),
+( '72', 'ORGANO CONSTITUCIONAL AUTONOMO', 'Organo constitucional autonomo', '15', NULL, '2019-10-04 12:16:14', '2019-10-04 12:16:14' ),
+( '73', 'MIXTO', 'Mixto', '16', NULL, '2019-10-04 12:17:12', '2019-10-04 12:17:12' ),
+( '74', 'SEPARACIÓN DE BIENES', 'Separación de bienes', '16', NULL, '2019-10-04 12:18:03', '2019-10-04 12:18:03' ),
+( '75', 'SOCIEDAD CONYUGAL', 'Sociedad conyugal', '16', NULL, '2019-10-04 12:18:24', '2019-10-04 12:18:24' ),
+( '76', 'PUBLICO', 'Público', '17', NULL, '2019-10-04 12:19:29', '2019-10-04 12:19:29' ),
+( '77', 'SOCIAL', 'Social', '17', NULL, '2019-10-04 12:19:48', '2019-10-04 12:19:48' ),
+( '78', 'PRIVADO', 'Privado', '17', NULL, '2019-10-04 12:20:09', '2019-10-04 12:20:09' ),
+( '79', 'CUENTAS DE AHORRO', 'Cuentas de ahorro', '18', NULL, '2019-10-04 12:22:03', '2019-10-04 12:22:03' ),
+( '80', 'ABUELO(A)', 'Abuelo (a)', '19', NULL, '2019-10-04 12:22:44', '2019-10-04 12:22:44' ),
+( '81', 'BODEGA', 'Bodega', '20', NULL, '2019-10-04 12:23:23', '2019-10-04 12:23:23' ),
+( '82', 'AMPLIACION', 'Ampliación', '21', NULL, '2019-10-04 12:23:58', '2019-10-04 12:23:58' ),
+( '83', 'CONSTRUCCION', 'Construcción', '21', NULL, '2019-10-04 12:24:12', '2019-10-04 12:24:12' ),
+( '84', 'REMODELACION', 'Remodelación', '21', NULL, '2019-10-04 12:24:26', '2019-10-04 12:24:26' ),
+( '85', 'SIN TITULAR', 'Sin titular', '22', NULL, '2019-10-04 12:25:03', '2019-10-04 12:25:03' ),
+( '86', 'DECLARANTE', 'Declarante', '22', NULL, '2019-10-04 12:27:06', '2019-10-04 12:27:06' ),
+( '87', 'CONYUGE', 'Conyuge', '22', NULL, '2019-10-04 12:27:24', '2019-10-04 12:27:24' ),
+( '88', 'DECLARANTE Y CONYUGE', 'Declarante y conyuge', '22', NULL, '2019-10-04 12:28:12', '2019-10-04 12:28:12' ),
+( '89', 'DEPENDIENTES', 'Dependientes', '22', NULL, '2019-10-04 12:28:30', '2019-10-04 12:28:30' ),
+( '90', 'CONCUBINA O CONCUBINARIO', 'Concubina o concubino', '22', NULL, '2019-10-04 12:29:05', '2019-10-04 12:29:05' ),
+( '91', 'DECLARANTE EN COPROPIEDAD', 'Declarante en copropiedad', '22', NULL, '2019-10-04 12:29:36', '2019-10-04 12:29:36' ),
+( '92', 'CONYUGE EN COPROPIEDAD', 'Conyuge en copropiedad', '22', NULL, '2019-10-04 12:30:06', '2019-10-04 12:30:06' ),
+( '93', 'MÉXICO', 'México', '23', NULL, NULL, NULL ),
+( '94', 'EN EL EXTRANJERO', 'En el extranjero', '23', NULL, NULL, NULL ),
+( '95', 'AFGANISTAN', 'AFGANISTAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '96', 'ALBANIA', 'ALBANIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '97', 'ALEMANIA', 'ALEMANIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '98', 'ANDORRA', 'ANDORRA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '99', 'ANGOLA', 'ANGOLA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '100', 'ANGUILA', 'ANGUILA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '101', 'ANTIGUA Y BARBUDA', 'ANTIGUA Y BARBUDA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '102', 'ARABIA SAUDITA', 'ARABIA SAUDITA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '103', 'ARGELIA', 'ARGELIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '104', 'ARGENTINA', 'ARGENTINA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '105', 'ARMENIA', 'ARMENIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '106', 'ARUBA', 'ARUBA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '107', 'AUSTRALIA', 'AUSTRALIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '108', 'AUSTRIA', 'AUSTRIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '109', 'AZERBAIJAN', 'AZERBAIJAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '110', 'BAHAMAS', 'BAHAMAS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '111', 'BAHRIN', 'BAHRIN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '112', 'BANGLADESH', 'BANGLADESH', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '113', 'BARBADOS', 'BARBADOS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '114', 'BELGICA', 'BELGICA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '115', 'BELICE', 'BELICE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '116', 'BENIN', 'BENIN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '117', 'BERMUDAS', 'BERMUDAS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '118', 'BIELORUSIA', 'BIELORUSIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '119', 'BOLIVIA', 'BOLIVIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '120', 'BOSNIA HERZEGOVINA', 'BOSNIA HERZEGOVINA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '121', 'BOTZWANA', 'BOTZWANA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '122', 'BRASIL', 'BRASIL', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '123', 'BRUNEI', 'BRUNEI', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '124', 'BULGARIA', 'BULGARIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '125', 'BURKINA FASO', 'BURKINA FASO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '126', 'BURUNDI', 'BURUNDI', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '127', 'BUTAN', 'BUTAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '128', 'CABO VERDE', 'CABO VERDE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '129', 'CAMBOYA', 'CAMBOYA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '130', 'CAMERUN', 'CAMERUN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '131', 'CANADA', 'CANADA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '132', 'CENTROAFRICANA (REP.)', 'CENTROAFRICANA (REP.)', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '133', 'CHAD', 'CHAD', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '134', 'CHECA (REP.)', 'CHECA (REP.)', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '135', 'CHILE', 'CHILE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '136', 'CHINA', 'CHINA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '137', 'CHIPRE', 'CHIPRE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '138', 'COLOMBIA', 'COLOMBIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '139', 'COMORES', 'COMORES', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '140', 'CONGO', 'CONGO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '141', 'COREA DEL NORTE', 'COREA DEL NORTE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '142', 'COREA DEL SUR', 'COREA DEL SUR', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '143', 'COSTA DE MARFIL', 'COSTA DE MARFIL', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '144', 'COSTA RICA', 'COSTA RICA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '145', 'CROACIA', 'CROACIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '146', 'CUBA', 'CUBA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '147', 'DINAMARCA', 'DINAMARCA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '148', 'DJIBOUTI', 'DJIBOUTI', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '149', 'DOMINICANA', 'DOMINICANA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '150', 'ECUADOR', 'ECUADOR', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '151', 'EGIPTO', 'EGIPTO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '152', 'EL SALVADOR', 'EL SALVADOR', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '153', 'EMIRATOS ARABES UNIDOS', 'EMIRATOS ARABES UNIDOS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '154', 'ERITREA', 'ERITREA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '155', 'ESLOVAQUIA', 'ESLOVAQUIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '156', 'ESLOVENIA', 'ESLOVENIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '157', 'ESPAÑA', 'ESPAÑA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '158', 'ESTADOS FEDERADOS DE MICRONESIA', 'ESTADOS FEDERADOS DE MICRONESIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '159', 'ESTADOS UNIDOS DE AMERICA', 'ESTADOS UNIDOS DE AMERICA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '160', 'ESTONIA', 'ESTONIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '161', 'ETIOPIA', 'ETIOPIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '162', 'FIDJI', 'FIDJI', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '163', 'FILIPINAS', 'FILIPINAS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '164', 'FINLANDIA', 'FINLANDIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '165', 'FRANCIA', 'FRANCIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '166', 'GABON', 'GABON', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '167', 'GAMBIA', 'GAMBIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '168', 'GEORGIA', 'GEORGIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '169', 'GHANA', 'GHANA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '170', 'GRANADA', 'GRANADA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '171', 'GRECIA', 'GRECIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '172', 'GUAM', 'GUAM', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '173', 'GUATEMALA', 'GUATEMALA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '174', 'GUINEA', 'GUINEA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '175', 'GUINEA ECUATORIAL', 'GUINEA ECUATORIAL', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '176', 'GUINEA-BISSAU', 'GUINEA-BISSAU', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '177', 'GUYANA', 'GUYANA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '178', 'HAITI', 'HAITI', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '179', 'HOLANDA', 'HOLANDA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '180', 'HONDURAS', 'HONDURAS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '181', 'HONG KONG', 'HONG KONG', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '182', 'HUNGRIA', 'HUNGRIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '183', 'INDIA', 'INDIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '184', 'INDONESIA', 'INDONESIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '185', 'IRAK', 'IRAK', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '186', 'IRAN', 'IRAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '187', 'IRLANDA', 'IRLANDA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '188', 'ISLA MAURICIO', 'ISLA MAURICIO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '189', 'ISLANDIA', 'ISLANDIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '190', 'ISLAS MARSHALL', 'ISLAS MARSHALL', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '191', 'ISRAEL', 'ISRAEL', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '192', 'ITALIA', 'ITALIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '193', 'JAMAICA', 'JAMAICA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '194', 'JAPON', 'JAPON', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '195', 'JORDANIA', 'JORDANIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '196', 'KAZAJSTAN', 'KAZAJSTAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '197', 'KENYA', 'KENYA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '198', 'KIRGUIZTAN', 'KIRGUIZTAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '199', 'KIRIBATI', 'KIRIBATI', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '200', 'KUWAIT', 'KUWAIT', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '201', 'LAOS', 'LAOS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '202', 'LESOTHO', 'LESOTHO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '203', 'LETONIA', 'LETONIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '204', 'LIBANO', 'LIBANO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '205', 'LIBERIA', 'LIBERIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '206', 'LIBIA', 'LIBIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '207', 'LIECHTENSTEIN', 'LIECHTENSTEIN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '208', 'LITUANIA', 'LITUANIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '209', 'LUXEMBURGO', 'LUXEMBURGO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '210', 'MACAO', 'MACAO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '211', 'MACEDONIA', 'MACEDONIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '212', 'MADAGASCAR', 'MADAGASCAR', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '213', 'MALASIA', 'MALASIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '214', 'MALAWI', 'MALAWI', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '215', 'MALDIVAS', 'MALDIVAS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '216', 'MALI', 'MALI', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '217', 'MALTA', 'MALTA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '218', 'MARRUECOS', 'MARRUECOS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '219', 'MARTINICA', 'MARTINICA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '220', 'MAURICIO', 'MAURICIO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '221', 'MAURITANIA', 'MAURITANIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '222', 'MAYOTTE', 'MAYOTTE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '223', 'MEXICO', 'MEXICO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '224', 'MOLDAVIA', 'MOLDAVIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '225', 'MONACO', 'MONACO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '226', 'MONGOLIA', 'MONGOLIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '227', 'MONSERRAT', 'MONSERRAT', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '228', 'MOZAMBIQUE', 'MOZAMBIQUE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '229', 'MYANMAR', 'MYANMAR', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '230', 'NAMIBIA', 'NAMIBIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '231', 'NAURU', 'NAURU', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '232', 'NEPAL', 'NEPAL', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '233', 'NICARAGUA', 'NICARAGUA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '234', 'NIGER', 'NIGER', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '235', 'NIGERIA', 'NIGERIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '236', 'NIVE', 'NIVE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '237', 'NORUEGA', 'NORUEGA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '238', 'NUEVA CELEDONIA', 'NUEVA CELEDONIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '239', 'NUEVA ZELANDA', 'NUEVA ZELANDA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '240', 'OMAN', 'OMAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '241', 'PAKISTAN', 'PAKISTAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '242', 'PALAU', 'PALAU', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '243', 'PALESTINA', 'PALESTINA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '244', 'PANAMA', 'PANAMA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '245', 'PAPUA NUEVA GUINEA', 'PAPUA NUEVA GUINEA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '246', 'PARAGUAY', 'PARAGUAY', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '247', 'PERU', 'PERU', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '248', 'POLONIA', 'POLONIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '249', 'PORTUGAL', 'PORTUGAL', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '250', 'PUERTO RICO', 'PUERTO RICO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '251', 'QATAR', 'QATAR', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '252', 'REINO UNIDO', 'REINO UNIDO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '253', 'REPUBLICA DOMINICANA', 'REPUBLICA DOMINICANA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '254', 'REUNION', 'REUNION', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '255', 'RUANDA', 'RUANDA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '256', 'RUMANIA', 'RUMANIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '257', 'RUSIA', 'RUSIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '258', 'SAMOA OCCIDENTAL', 'SAMOA OCCIDENTAL', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '259', 'SAN KITTIS Y NEVIS', 'SAN KITTIS Y NEVIS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '260', 'SAN MARINO', 'SAN MARINO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '261', 'SAN VICENTE Y LAS GRANADINAS', 'SAN VICENTE Y LAS GRANADINAS', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '262', 'SANTA LUCIA', 'SANTA LUCIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '263', 'SANTO TOME Y PRINCIPE', 'SANTO TOME Y PRINCIPE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '264', 'SENEGAL', 'SENEGAL', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '265', 'SEYCHELLES', 'SEYCHELLES', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '266', 'SIERRA LEONA', 'SIERRA LEONA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '267', 'SINGAPUR', 'SINGAPUR', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '268', 'SIRIA', 'SIRIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '269', 'SOMALIA', 'SOMALIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '270', 'SRI LANKA', 'SRI LANKA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '271', 'SUDAFRICA', 'SUDAFRICA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '272', 'SUDAN', 'SUDAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '273', 'SUECIA', 'SUECIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '274', 'SUIZA', 'SUIZA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '275', 'SURINAM', 'SURINAM', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '276', 'SWAZILANDIA', 'SWAZILANDIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '277', 'TADZHIKISTAN', 'TADZHIKISTAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '278', 'TAILANDIA', 'TAILANDIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '279', 'TANZANIA', 'TANZANIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '280', 'TOGO', 'TOGO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '281', 'TONGA', 'TONGA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '282', 'TRINIDAD Y TOBAGO', 'TRINIDAD Y TOBAGO', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '283', 'TUNEZ', 'TUNEZ', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '284', 'TURKMENISTAN', 'TURKMENISTAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '285', 'TURQUIA', 'TURQUIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '286', 'TUVALU', 'TUVALU', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '287', 'UCRANIA', 'UCRANIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '288', 'UGANDA', 'UGANDA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '289', 'URUGUAY', 'URUGUAY', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '290', 'UZBEKISTAN', 'UZBEKISTAN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '291', 'VANUATU', 'VANUATU', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '292', 'VENEZUELA', 'VENEZUELA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '293', 'VIETNAM', 'VIETNAM', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '294', 'YEMEN', 'YEMEN', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '295', 'YUGOSLAVIA', 'YUGOSLAVIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '296', 'ZAIRE', 'ZAIRE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '297', 'ZAMBIA', 'ZAMBIA', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '298', 'ZIMBABWE', 'ZIMBABWE', '12', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '299', 'AFGANA', 'AFGANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '300', 'ALBANESA', 'ALBANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '301', 'ALEMANA', 'ALEMANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '302', 'ANDORRANA', 'ANDORRANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '303', 'ANGOLEÑA', 'ANGOLEÑA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '304', 'ANGUILIANA', 'ANGUILIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '305', 'ANTIGUANA', 'ANTIGUANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '306', 'ARABE', 'ARABE', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '307', 'ARGELINA', 'ARGELINA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '308', 'ARGENTINA', 'ARGENTINA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '309', 'ARMENIA', 'ARMENIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '310', 'AUSTRALIANA', 'AUSTRALIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '311', 'AUSTRIACA', 'AUSTRIACA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '312', 'AZERI', 'AZERI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '313', 'BAHAMEÑA', 'BAHAMEÑA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '314', 'BAJANA', 'BAJANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '315', 'BANGLADESI', 'BANGLADESI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '316', 'BELGA', 'BELGA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '317', 'BELICEÑA', 'BELICEÑA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '318', 'BENINESA', 'BENINESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '319', 'BHUTANESA', 'BHUTANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '320', 'BIELORUSA', 'BIELORUSA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '321', 'BOLIVIANA', 'BOLIVIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '322', 'BOSNIA', 'BOSNIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '323', 'BOTZAWANA', 'BOTZAWANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '324', 'BRASILEÑA', 'BRASILEÑA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '325', 'BRITANICA', 'BRITANICA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '326', 'BRUNEIANA', 'BRUNEIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '327', 'BULGARA', 'BULGARA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '328', 'BURKINABESA', 'BURKINABESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '329', 'BUTANESA', 'BUTANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '330', 'CAMBODIANA', 'CAMBODIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '331', 'CAMERUNESA', 'CAMERUNESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '332', 'CANADIENSE', 'CANADIENSE', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '333', 'CINGALESA', 'CINGALESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '334', 'COLOMBIANA', 'COLOMBIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '335', 'COMORESA', 'COMORESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '336', 'CONGOLESA', 'CONGOLESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '337', 'COSTARRICENSE', 'COSTARRICENSE', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '338', 'CROATA', 'CROATA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '339', 'CUBANA', 'CUBANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '340', 'CHADIANESA', 'CHADIANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '341', 'CHECA', 'CHECA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '342', 'CHILENA', 'CHILENA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '343', 'CHINA', 'CHINA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '344', 'CHIPRIOTA', 'CHIPRIOTA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '345', 'DANESA', 'DANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '346', 'DJIBOUTI', 'DJIBOUTI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '347', 'DOMINICANA', 'DOMINICANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '348', 'ECUATORIANA', 'ECUATORIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '349', 'EGIPCIA', 'EGIPCIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '350', 'ERITREANA', 'ERITREANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '351', 'ESPAÑOLA', 'ESPAÑOLA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '352', 'ESTADOUNIDENSE', 'ESTADOUNIDENSE', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '353', 'ESTONA', 'ESTONA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '354', 'ETIOPE', 'ETIOPE', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '355', 'FIDJIANA', 'FIDJIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '356', 'FILIPINA', 'FILIPINA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '357', 'FINLANDESA', 'FINLANDESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '358', 'FRANCESA', 'FRANCESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '359', 'GABONESA', 'GABONESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '360', 'GAMBIANA', 'GAMBIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '361', 'GEORGIANA', 'GEORGIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '362', 'GHANESA', 'GHANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '363', 'GRANADESA', 'GRANADESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '364', 'GRIEGA', 'GRIEGA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '365', 'GUATEMALTECA', 'GUATEMALTECA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '366', 'GUINEANA', 'GUINEANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '367', 'GUYANESA', 'GUYANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '368', 'HAITIANA', 'HAITIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '369', 'HOLANDESA', 'HOLANDESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '370', 'HONDUREÑA', 'HONDUREÑA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '371', 'HUNGARA', 'HUNGARA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '372', 'INDIA', 'INDIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '373', 'INDONESIA', 'INDONESIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '374', 'IRANI', 'IRANI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '375', 'IRAQUI', 'IRAQUI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '376', 'IRLANDESA', 'IRLANDESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '377', 'ISLANDESA', 'ISLANDESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '378', 'ISRAELI', 'ISRAELI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '379', 'ITALIANA', 'ITALIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '380', 'IVORIANESA', 'IVORIANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '381', 'JAMAIQUINA', 'JAMAIQUINA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '382', 'JAPONESA', 'JAPONESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '383', 'JORDANA', 'JORDANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '384', 'KAZACA', 'KAZACA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '385', 'KENIATA', 'KENIATA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '386', 'KIRGUIZTANI', 'KIRGUIZTANI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '387', 'KIRIBATIANA', 'KIRIBATIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '388', 'KITTITIANA', 'KITTITIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '389', 'KUWAITI', 'KUWAITI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '390', 'LAOSIANA', 'LAOSIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '391', 'LEONESA', 'LEONESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '392', 'LETONA', 'LETONA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '393', 'LIBANESA', 'LIBANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '394', 'LIBERIANA', 'LIBERIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '395', 'LIBIA', 'LIBIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '396', 'LIECHTENIANA', 'LIECHTENIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '397', 'LITUANA', 'LITUANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '398', 'LUXEMBURGUESA', 'LUXEMBURGUESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '399', 'MACEDONIA', 'MACEDONIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '400', 'MALAGASIANA', 'MALAGASIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '401', 'MALAWESA', 'MALAWESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '402', 'MALAYA', 'MALAYA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '403', 'MALDIVI', 'MALDIVI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '404', 'MALGACHE', 'MALGACHE', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '405', 'MALTESA', 'MALTESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '406', 'MARROQUI', 'MARROQUI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '407', 'MAURICIANA', 'MAURICIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '408', 'MAURITANA', 'MAURITANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '409', 'MICRONESA', 'MICRONESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '410', 'MOLDAVA', 'MOLDAVA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '411', 'MONAGUESCA', 'MONAGUESCA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '412', 'MONGOLICA', 'MONGOLICA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '413', 'MOSOTHO', 'MOSOTHO', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '414', 'MOZAMBICANO', 'MOZAMBICANO', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '415', 'MYANMARI', 'MYANMARI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '416', 'NAMIBIA', 'NAMIBIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '417', 'NAURUANA', 'NAURUANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '418', 'NEOZELANDESA', 'NEOZELANDESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '419', 'NEPALESA', 'NEPALESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '420', 'NICARAGÜENCE', 'NICARAGÜENCE', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '421', 'NIGERINA', 'NIGERINA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '422', 'NIGERIANA', 'NIGERIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '423', 'NORCOREANA', 'NORCOREANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '424', 'NORUEGA', 'NORUEGA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '425', 'OMANESA', 'OMANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '426', 'PANAMEÑA', 'PANAMEÑA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '427', 'PAPUA', 'PAPUA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '428', 'PAQUISTANI', 'PAQUISTANI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '429', 'PARAGUAYA', 'PARAGUAYA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '430', 'PERUANA', 'PERUANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '431', 'POLACA', 'POLACA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '432', 'PORTUGUESA', 'PORTUGUESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '433', 'PUERTORIQUEÑA', 'PUERTORIQUEÑA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '434', 'QATARI', 'QATARI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '435', 'RUMANA', 'RUMANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '436', 'RUSA', 'RUSA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '437', 'SALVADOREÑA', 'SALVADOREÑA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '438', 'SAMOANA', 'SAMOANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '439', 'SANMARINESA', 'SANMARINESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '440', 'SANTALUCIANA', 'SANTALUCIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '441', 'SANTOMEANA', 'SANTOMEANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '442', 'SAUDITA', 'SAUDITA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '443', 'SENEGALESA', 'SENEGALESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '444', 'SEYCHELEA', 'SEYCHELEA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '445', 'SINGAPOREANA', 'SINGAPOREANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '446', 'SIRIA', 'SIRIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '447', 'SLOVACA', 'SLOVACA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '448', 'SLOVENA', 'SLOVENA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '449', 'SOMALI', 'SOMALI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '450', 'SRILANKA', 'SRILANKA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '451', 'SUDAFRICANA', 'SUDAFRICANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '452', 'SUDANESA', 'SUDANESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '453', 'SUECA', 'SUECA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '454', 'SUIZA', 'SUIZA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '455', 'SURCOREANA', 'SURCOREANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '456', 'SURINAMITA', 'SURINAMITA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '457', 'SWAZI', 'SWAZI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '458', 'TADZIHKA', 'TADZIHKA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '459', 'TAILANDESA', 'TAILANDESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '460', 'TANSANA', 'TANSANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '461', 'TOGOLESA', 'TOGOLESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '462', 'TONGANI', 'TONGANI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '463', 'TRINITARIA', 'TRINITARIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '464', 'TUNECINA', 'TUNECINA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '465', 'TURCA', 'TURCA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '466', 'TURKMENIA', 'TURKMENIA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '467', 'TUVALESA', 'TUVALESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '468', 'UCRANIANA', 'UCRANIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '469', 'UGANDESA', 'UGANDESA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '470', 'URUGUAYA', 'URUGUAYA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '471', 'UZBEKA', 'UZBEKA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '472', 'VANUATI', 'VANUATI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '473', 'VENEZOLANA', 'VENEZOLANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '474', 'VICENTIANA', 'VICENTIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '475', 'VIETNAMITA', 'VIETNAMITA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '476', 'YEMENITA', 'YEMENITA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '477', 'YUGOSLAVA', 'YUGOSLAVA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '478', 'ZAIREÑA', 'ZAIREÑA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '479', 'ZAMBIANA', 'ZAMBIANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '480', 'ZIMBABI', 'ZIMBABI', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '481', 'MEXICANA', 'MEXICANA', '10', NULL, '2019-10-04 10:18:36', '2019-10-04 10:18:36' ),
+( '482', 'SÍ', 'SÍ', '24', NULL, NULL, NULL ),
+( '483', 'NO', 'NO', '24', NULL, NULL, NULL ),
+( '484', 'MÉXICO', 'EN MÉXICO', '25', NULL, NULL, NULL ),
+( '485', 'EXTRANJERO', 'EN EL EXTRANJERO', '25', NULL, NULL, NULL ),
+( '486', 'DESCONOCIDO', 'SE DESCONOCE', '25', NULL, NULL, NULL ),
+( '487', 'OTRO', 'OTRO', '17', NULL, NULL, NULL ),
+( '488', 'AGRICULTURA', 'AGROCULTURA', '26', NULL, NULL, NULL ),
+( '489', 'MINERÍA', 'MINERÍA', '26', NULL, NULL, NULL ),
+( '490', 'ENERGÍA ELÉCTRICA', 'ENERGÍA ELÉCTRICA', '26', NULL, NULL, NULL ),
+( '491', 'CONSTRUCCIÓN', 'CONSTRUCCIÓN', '26', NULL, NULL, NULL ),
+( '492', 'INDUSTRIA MANUFACTURERA', 'INSDUSTRIA MANUFACTURERA', '26', NULL, NULL, NULL ),
+( '493', 'COMERCIO AL POR MAYOR', 'COMERCIO AL POR MAYOR', '26', NULL, NULL, NULL ),
+( '494', 'COMERCIO AL POR MENOR', 'COMERCIO AL POR MENOR', '26', NULL, NULL, NULL ),
+( '495', 'TRANSPORTE', 'TRANSPORTE', '26', NULL, NULL, NULL ),
+( '496', 'MEDIOS MASIVOS', 'MEDIOS MASIVOS', '26', NULL, NULL, NULL ),
+( '497', 'SERVICIOS FINANCIEROS', 'SERVICIOS FINANCIEROS', '26', NULL, NULL, NULL ),
+( '498', 'SERVICIOS INMMOBILIARIOS', 'SERVICIOS INMOBILIARIOS', '26', NULL, NULL, NULL ),
+( '499', 'SERVICIOS PROFESIONALES', 'SERVICIOS PROFESIONALES', '26', NULL, NULL, NULL ),
+( '500', 'SERVICIOS CORPORATIVOS', 'SERVICOS CORPORATIVOS', '26', NULL, NULL, NULL ),
+( '501', 'SERVICIOS DE SALUD', 'SERVICIOS DE SALUD', '26', NULL, NULL, NULL ),
+( '502', 'SERVICIOS DE ESPARCIMIENTO', 'SERVICIOS DE ESPARCIMIENTO', '26', NULL, NULL, NULL ),
+( '503', 'SERVICIOS DE ALOJAMIENTO', 'SERVICIOS DE ALOJAMIENTO', '26', NULL, NULL, NULL );
+-- ---------------------------------------------------------
+
+
+-- Dump data of "catalogs" ---------------------------------
+INSERT INTO `catalogs`(`id`,`name`,`description`,`deleted_at`,`created_at`,`updated_at`) VALUES 
+( '1', 'Ambitos', 'Ambitos', NULL, '2019-10-04 10:18:19', '2019-10-04 10:18:19' ),
+( '2', 'Documento obtenido', 'Documento obtenido', NULL, '2019-10-04 10:20:09', '2019-10-04 10:20:09' ),
+( '3', 'Estados de México', 'Estados de México', NULL, '2019-10-04 10:21:57', '2019-10-04 10:21:57' ),
+( '4', 'Estado civil', 'Estado civil', NULL, '2019-10-04 10:23:41', '2019-10-04 10:23:41' ),
+( '5', 'Escolaridad', 'Escolaridad', NULL, '2019-10-04 10:26:49', '2019-10-04 10:26:49' ),
+( '6', 'Forma adquisición', 'Forma adquisición', NULL, '2019-10-04 10:28:11', '2019-10-04 10:28:11' ),
+( '7', 'Inversiones', 'Inversiones', NULL, '2019-10-04 10:31:46', '2019-10-04 10:31:46' ),
+( '8', 'Dependencias', 'Dependencias', NULL, '2019-10-04 10:35:44', '2019-10-04 10:35:44' ),
+( '9', 'Municipios', 'Municipios', NULL, '2019-10-04 10:37:01', '2019-10-04 10:37:01' ),
+( '10', 'Nacionalidades', 'Nacionalidades', NULL, '2019-10-04 10:38:03', '2019-10-04 10:38:03' ),
+( '11', 'Niveles academicos', 'Niveles academicos', NULL, '2019-10-04 10:38:44', '2019-10-04 10:38:44' ),
+( '12', 'Paises', 'Paises', NULL, '2019-10-04 12:01:23', '2019-10-04 12:01:23' ),
+( '13', 'Parentescos', 'Parentescos', NULL, '2019-10-04 12:02:10', '2019-10-04 12:02:10' ),
+( '14', 'Periodos', 'Periodos', NULL, '2019-10-04 12:11:24', '2019-10-04 12:11:24' ),
+( '15', 'Poderes', 'Poderes', NULL, '2019-10-04 12:14:08', '2019-10-04 12:14:08' ),
+( '16', 'Regimen  matrimonial', 'Regimen  matrimonial', NULL, '2019-10-04 12:16:53', '2019-10-04 12:16:53' ),
+( '17', 'Sectores', 'Sectores', NULL, '2019-10-04 12:18:49', '2019-10-04 12:18:49' ),
+( '18', 'Tipo de inversión', 'Tipo de inversión', NULL, '2019-10-04 12:21:31', '2019-10-04 12:21:31' ),
+( '19', 'Tipo de relación', 'Tipo de relación', NULL, '2019-10-04 12:22:26', '2019-10-04 12:22:26' ),
+( '20', 'Tipos de bienes', 'Tipos de bienes', NULL, '2019-10-04 12:23:10', '2019-10-04 12:23:10' ),
+( '21', 'Tipos de obras', 'Tipos de obras', NULL, '2019-10-04 12:23:40', '2019-10-04 12:23:40' ),
+( '22', 'Titular', 'Titular', NULL, '2019-10-04 12:24:47', '2019-10-04 12:24:47' ),
+( '23', 'Lugar donde se ubica', 'Lugra donde se encuentra el domicilio del declarante', NULL, NULL, NULL ),
+( '24', 'Adverbios', 'Adverbios', NULL, NULL, NULL ),
+( '25', 'Lugar donde reside', 'Lugar donde reside', NULL, NULL, NULL ),
+( '26', 'Sector Privado', 'Sector Privado', NULL, NULL, NULL );
+-- ---------------------------------------------------------
+
+
+-- Dump data of "conditions" -------------------------------
+INSERT INTO `conditions`(`id`,`visible`,`condition_value`,`operator`,`question_id`,`created_at`,`updated_at`) VALUES 
+( '1', '1', 'MÉXICO', 'equal', '48', '2019-10-17 09:46:26', '2019-10-17 09:46:26' ),
+( '2', '1', 'MÉXICO', 'equal', '49', '2019-10-17 09:58:20', '2019-10-17 09:58:20' ),
+( '3', '1', 'MÉXICO', 'equal', '50', '2019-10-17 09:58:31', '2019-10-17 09:58:31' ),
+( '4', '1', 'EN EL EXTRANJERO', 'equal', '51', '2019-10-17 09:58:40', '2019-10-17 09:58:40' ),
+( '5', '1', 'EN EL EXTRANJERO', 'equal', '52', '2019-10-17 09:58:48', '2019-10-17 09:58:48' ),
+( '6', '1', 'EN EL EXTRANJERO', 'equal', '53', '2019-10-17 09:59:04', '2019-10-17 09:59:04' ),
+( '8', '1', 'MÉXICO', 'equal', '70', '2019-10-18 09:58:57', '2019-10-18 09:58:57' ),
+( '9', '1', 'MÉXICO', 'equal', '71', '2019-10-18 09:59:05', '2019-10-18 09:59:05' ),
+( '10', '1', 'MÉXICO', 'equal', '72', '2019-10-18 09:59:12', '2019-10-18 09:59:12' ),
+( '11', '1', 'EN EL EXTRANJERO', 'equal', '73', '2019-10-18 10:00:16', '2019-10-18 10:00:16' ),
+( '12', '1', 'EN EL EXTRANJERO', 'equal', '74', '2019-10-18 10:00:24', '2019-10-18 10:00:24' ),
+( '13', '1', 'EN EL EXTRANJERO', 'equal', '75', '2019-10-18 10:00:32', '2019-10-18 10:00:32' ),
+( '14', '1', 'OTRO', 'equal', '78', '2019-10-18 10:04:44', '2019-10-18 10:04:44' ),
+( '15', '1', 'PUBLICO', 'equal', '83', '2019-10-18 10:12:44', '2019-10-18 10:12:44' ),
+( '16', '1', 'PUBLICO', 'equal', '84', '2019-10-18 10:12:52', '2019-10-18 10:12:52' ),
+( '17', '1', 'PUBLICO', 'equal', '85', '2019-10-18 10:13:00', '2019-10-18 10:13:00' ),
+( '18', '1', 'PUBLICO', 'equal', '86', '2019-10-18 10:13:07', '2019-10-18 10:13:07' ),
+( '19', '1', 'PUBLICO', 'equal', '87', '2019-10-18 10:14:47', '2019-10-18 10:14:47' ),
+( '20', '1', 'PUBLICO', 'equal', '88', '2019-10-18 10:14:54', '2019-10-18 10:14:54' ),
+( '21', '1', 'PUBLICO', 'equal', '89', '2019-10-18 10:15:01', '2019-10-18 10:15:01' ),
+( '22', '1', 'PUBLICO', 'equal', '90', '2019-10-18 10:15:09', '2019-10-18 10:15:09' ),
+( '23', '1', 'PRIVADO', 'equal', '91', '2019-10-19 06:10:04', '2019-10-19 06:10:04' ),
+( '24', '1', 'PRIVADO', 'equal', '92', '2019-10-19 06:10:14', '2019-10-19 06:10:14' ),
+( '25', '1', 'PRIVADO', 'equal', '93', '2019-10-19 06:10:25', '2019-10-19 06:10:25' ),
+( '26', '1', 'PRIVADO', 'equal', '94', '2019-10-19 06:10:33', '2019-10-19 06:10:33' ),
+( '27', '1', 'PRIVADO', 'equal', '95', '2019-10-19 06:10:43', '2019-10-19 06:10:43' );
+-- ---------------------------------------------------------
+
+
+-- Dump data of "declarations" -----------------------------
+INSERT INTO `declarations`(`id`,`type`,`status`,`current_section`,`target_date`,`user_id`,`deleted_at`,`created_at`,`updated_at`) VALUES 
+( '1', 'INICIAL', 'initial', 'datos-de-la-pareja', '2019-10-18 23:14:54', '2', NULL, '2019-10-19 04:12:49', '2019-10-19 04:14:54' );
+-- ---------------------------------------------------------
+
+
+-- Dump data of "migrations" -------------------------------
+INSERT INTO `migrations`(`id`,`migration`,`batch`) VALUES 
+( '1', '2014_10_12_000000_create_users_table', '1' ),
+( '2', '2014_10_12_100000_create_password_resets_table', '1' ),
+( '3', '2019_09_01_173939_create_declarations_table', '1' ),
+( '4', '2019_09_01_173951_create_sections_table', '1' ),
+( '5', '2019_09_01_173959_create_catalogs_table', '1' ),
+( '6', '2019_09_01_174007_create_questions_table', '1' ),
+( '7', '2019_09_01_174028_create_user_declarations_table', '1' ),
+( '8', '2019_09_02_221334_create_catalog_options_table', '1' ),
+( '9', '2019_10_05_190014_create_conditions_table', '1' ),
+( '10', '2019_10_17_225137_create_section_question_table', '1' ),
+( '11', '2019_10_19_035849_update_questions_table', '2' );
+-- ---------------------------------------------------------
+
+
+-- Dump data of "password_resets" --------------------------
+-- ---------------------------------------------------------
+
+
+-- Dump data of "questions" --------------------------------
+INSERT INTO `questions`(`id`,`index`,`type`,`content`,`catalog_id`,`is_parent`,`is_private`,`min`,`max`,`parent_id`,`columns`,`status`,`required`,`deleted_at`,`created_at`,`updated_at`,`disabled`,`prop_linked`) VALUES 
+( '1', '100', 'TextWidget', 'NOMBRE (S)', NULL, '0', '0', '1', '50', NULL, '4', 'active', '1', NULL, '2019-10-09 14:37:25', '2019-10-09 14:37:25', '0', NULL ),
+( '2', '100', 'TextWidget', 'PRIMER APELLIDO', NULL, '0', '0', '1', '50', NULL, '4', 'active', '1', NULL, '2019-10-09 14:37:42', '2019-10-09 14:37:42', '0', NULL ),
+( '3', '100', 'TextWidget', 'SEGUNDO APELLIDO', NULL, '0', '0', '1', '50', NULL, '4', 'active', '1', NULL, '2019-10-09 14:38:08', '2019-10-09 14:38:08', '0', NULL ),
+( '4', '100', 'TextWidget', 'CURP', NULL, '0', '1', '18', '18', NULL, '4', 'active', '1', NULL, '2019-10-09 14:39:06', '2019-10-09 14:39:06', '0', NULL ),
+( '5', '100', 'TextWidget', 'RFC', NULL, '0', '1', '10', '10', NULL, '4', 'active', '1', NULL, '2019-10-09 14:39:19', '2019-10-09 14:39:19', '0', NULL ),
+( '6', '100', 'TextWidget', 'HOMOCLAVE', NULL, '0', '1', '3', '3', NULL, '4', 'active', '1', NULL, '2019-10-09 14:39:33', '2019-10-09 14:39:33', '0', NULL ),
+( '7', '100', 'TextWidget', 'CORREO ELECTRÓNICO INSTITUCIONAL', NULL, '0', '0', '1', '100', NULL, '4', 'active', '1', NULL, '2019-10-09 14:40:05', '2019-10-09 14:40:05', '0', NULL ),
+( '8', '100', 'TextWidget', 'CORREO ELECTRÓNICO PERSONAL / ALTERNO', NULL, '0', '1', '1', '100', NULL, '4', 'active', '1', NULL, '2019-10-09 14:40:51', '2019-10-09 14:40:51', '0', NULL ),
+( '9', '100', 'TextWidget', 'NÚMERO TELEFÓNICO DE CASA', NULL, '0', '1', '10', '10', NULL, '4', 'active', '1', NULL, '2019-10-09 14:41:18', '2019-10-09 14:41:18', '0', NULL ),
+( '10', '100', 'TextWidget', 'NÚMERO CELULAR PERSONAL', NULL, '0', '1', '10', '10', NULL, '3', 'active', '1', NULL, '2019-10-09 14:41:48', '2019-10-09 14:41:48', '0', NULL ),
+( '11', '100', 'RadioWidget', 'SITUACIÓN PERSONAL / ESTADO CIVIL', '4', '0', '1', '0', '100', NULL, '9', 'active', '1', NULL, '2019-10-09 14:42:34', '2019-10-09 14:42:34', '0', NULL ),
+( '12', '100', 'RadioWidget', 'RÉGIMEN MATRIMONIAL', '16', '0', '1', '0', '100', NULL, '6', 'active', '1', NULL, '2019-10-09 14:43:21', '2019-10-09 14:43:21', '0', NULL ),
+( '13', '100', 'CatalogWidget', 'PAÍS DE NACIMIENTO', '12', '0', '1', '0', '100', NULL, '3', 'active', '1', NULL, '2019-10-09 14:45:15', '2019-10-09 14:45:15', '0', NULL ),
+( '14', '100', 'CatalogWidget', 'NACIONALIDAD', '10', '0', '1', '0', '100', NULL, '3', 'active', '1', NULL, '2019-10-09 14:45:43', '2019-10-09 14:45:43', '0', NULL ),
+( '15', '100', 'TextareaWidget', 'ACLARACIONES / OBSERVACIONES', NULL, '0', '1', '0', '100', NULL, '12', 'active', '1', NULL, '2019-10-09 14:46:12', '2019-10-09 14:46:12', '0', NULL ),
+( '16', '1', 'RadioWidget', 'LUGAR DONDE SE UBICA', '23', '1', '1', '0', '100', NULL, '12', 'active', '1', NULL, '2019-10-09 14:46:54', '2019-10-11 13:43:23', '0', NULL ),
+( '17', '100', 'TextWidget', 'CALLE', NULL, '0', '1', '1', '100', '16', '6', 'active', '1', '2019-10-09 14:49:02', '2019-10-09 14:48:18', '2019-10-09 14:49:02', '0', NULL ),
+( '18', '100', 'TextWidget', 'CALLE', NULL, '0', '1', '1', '50', '16', '4', 'active', '1', '2019-10-11 13:38:57', '2019-10-10 13:37:07', '2019-10-11 13:38:57', '0', NULL ),
+( '19', '100', 'TextWidget', 'NÚMERO EXTERIOR', NULL, '0', '1', '1', '10', '16', '4', 'active', '1', '2019-10-11 13:39:01', '2019-10-10 13:44:04', '2019-10-11 13:39:01', '0', NULL ),
+( '20', '100', 'TextWidget', 'NÚMERO INTERIOR', NULL, '0', '1', '1', '10', '16', '4', 'active', '1', '2019-10-11 13:39:04', '2019-10-10 13:45:48', '2019-10-11 13:39:04', '0', NULL ),
+( '21', '100', 'TextWidget', 'COLONIA / LOCALIDAD', NULL, '0', '1', '1', '50', '16', '4', 'active', '1', NULL, '2019-10-10 13:47:02', '2019-10-10 13:47:02', '0', NULL ),
+( '22', '100', 'TextWidget', 'MUNICPIO / ALCALDÍA', NULL, '0', '1', '1', '50', '16', '4', 'active', '1', NULL, '2019-10-10 13:47:48', '2019-10-10 13:47:48', '0', NULL ),
+( '23', '100', 'TextWidget', 'ENTIDAD FEDERATIVA', NULL, '0', '1', '1', '50', '16', '4', 'active', '1', NULL, '2019-10-10 13:50:11', '2019-10-10 13:50:11', '0', NULL ),
+( '24', '6', 'TextareaWidget', 'ACLARACIONES / OBSERVACIONES', NULL, '0', '1', '0', '100', NULL, '12', 'active', '1', NULL, '2019-10-10 13:50:46', '2019-10-11 13:41:51', '0', NULL ),
+( '25', '100', 'TextWidget', 'CIUDAD / LOCALIDAD', NULL, '0', '1', '1', '50', '16', '4', 'active', '1', NULL, '2019-10-10 13:51:25', '2019-10-10 13:51:25', '0', NULL ),
+( '26', '100', 'TextWidget', 'ESTADO / PROVINCIA', NULL, '0', '1', '1', '50', '16', '4', 'active', '1', NULL, '2019-10-10 13:52:14', '2019-10-10 13:52:14', '0', NULL ),
+( '27', '100', 'CatalogWidget', 'PAIS', '12', '0', '1', '0', '100', '16', '4', 'active', '1', NULL, '2019-10-10 13:53:33', '2019-10-10 13:53:33', '0', NULL ),
+( '28', '100', 'TextWidget', 'CÓDIGO POSTAL', NULL, '0', '1', '1', '10', '16', '4', 'active', '1', '2019-10-11 13:39:25', '2019-10-10 13:55:41', '2019-10-11 13:39:25', '0', NULL ),
+( '29', '2', 'TextWidget', 'CALLE', NULL, '0', '1', '1', '50', NULL, '4', 'active', '1', NULL, '2019-10-11 13:39:57', '2019-10-11 13:43:23', '0', NULL ),
+( '30', '3', 'TextWidget', 'NÚMERO EXTERIOR', NULL, '0', '1', '1', '10', NULL, '4', 'active', '1', NULL, '2019-10-11 13:40:23', '2019-10-11 13:43:23', '0', NULL ),
+( '31', '4', 'TextWidget', 'NÚMERO INTERIOR', NULL, '0', '1', '1', '10', NULL, '4', 'active', '0', NULL, '2019-10-11 13:40:39', '2019-10-11 13:43:24', '0', NULL ),
+( '32', '5', 'TextWidget', 'CÓDIGO POSTAL', NULL, '0', '1', '1', '10', NULL, '12', 'active', '1', NULL, '2019-10-11 13:41:46', '2019-10-11 13:41:51', '0', NULL ),
+( '33', '100', 'CatalogWidget', 'NIVEL / ORDEN DE GOBIERNO', '1', '0', '0', '0', '100', NULL, '6', 'active', '1', NULL, '2019-10-17 09:16:53', '2019-10-17 09:16:53', '0', NULL ),
+( '34', '100', 'CatalogWidget', 'ÁMBITO PÚBLICO', '15', '0', '0', '0', '100', NULL, '6', 'active', '1', NULL, '2019-10-17 09:17:35', '2019-10-17 09:17:35', '0', NULL ),
+( '35', '100', 'TextWidget', 'NOMBRE DEL ENTE PÚBLICO', NULL, '0', '0', '100', '100', NULL, '12', 'active', '1', NULL, '2019-10-17 09:27:58', '2019-10-17 09:27:58', '0', NULL ),
+( '36', '100', 'TextWidget', 'ÁREA DE ADSCRIPCIÓN', NULL, '0', '0', '50', '50', NULL, '3', 'active', '1', NULL, '2019-10-17 09:29:18', '2019-10-17 09:29:18', '0', NULL ),
+( '37', '100', 'TextWidget', 'EMPLEO, CARGO O COMISIÓN', NULL, '0', '0', '50', '50', NULL, '3', 'active', '1', NULL, '2019-10-17 09:29:53', '2019-10-17 09:29:53', '0', NULL ),
+( '38', '100', 'RadioWidget', '¿ESTÁ CONTRATADO POR HONORARIOS?', '24', '0', '0', '0', '100', NULL, '3', 'active', '1', NULL, '2019-10-17 09:38:53', '2019-10-17 09:57:55', '0', NULL ),
+( '39', '100', 'TextWidget', 'NIVEL DEL EMPLEO, CARGO O COMISIÓN', NULL, '0', '0', '50', '50', NULL, '3', 'active', '1', NULL, '2019-10-17 09:39:36', '2019-10-17 09:39:36', '0', NULL ),
+( '40', '100', 'TextWidget', 'ESPECIFIQUE FUNCIÓN PRINCIPAL', NULL, '0', '0', '200', '200', NULL, '12', 'active', '1', NULL, '2019-10-17 09:40:22', '2019-10-17 09:40:22', '0', NULL ),
+( '41', '100', 'DateWidget', 'FECHA DE TOMA DE POSESIÓN DEL EMPLEO, CARGO O COMISIÓN', NULL, '0', '0', '0', '100', NULL, '6', 'active', '1', NULL, '2019-10-17 09:41:24', '2019-10-18 08:56:01', '0', NULL ),
+( '42', '100', 'TextWidget', 'TELÉFONO DE OFICINA Y EXTENSIÓN', NULL, '0', '0', '20', '20', NULL, '6', 'active', '1', NULL, '2019-10-17 09:42:25', '2019-10-17 09:42:25', '0', NULL ),
+( '43', '100', 'CatalogWidget', 'DOMICILIO DEL EMPLEO, CARGO O COMISIÓN', '23', '1', '0', '0', '100', NULL, '12', 'active', '1', NULL, '2019-10-17 09:43:14', '2019-10-17 09:44:34', '0', NULL ),
+( '44', '100', 'TextWidget', 'CALLE', NULL, '0', '0', '50', '50', NULL, '4', 'active', '1', NULL, '2019-10-17 09:43:39', '2019-10-17 09:43:39', '0', NULL ),
+( '45', '100', 'TextWidget', 'NÚMERO EXTERIOR', NULL, '0', '0', '50', '50', NULL, '4', 'active', '1', NULL, '2019-10-17 09:43:59', '2019-10-17 09:43:59', '0', NULL ),
+( '46', '100', 'TextWidget', 'NÚMERO INTERIOR', NULL, '0', '0', '50', '50', NULL, '4', 'active', '0', NULL, '2019-10-17 09:44:24', '2019-10-17 09:44:24', '0', NULL ),
+( '47', '100', 'TextWidget', 'CÓDIGO POSTAL', NULL, '0', '0', '15', '15', NULL, '6', 'active', '1', NULL, '2019-10-17 09:45:22', '2019-10-17 09:45:22', '0', NULL ),
+( '48', '100', 'TextWidget', 'COLONIA / LOCALIDAD', NULL, '0', '0', '50', '50', '43', '4', 'active', '1', NULL, '2019-10-17 09:46:04', '2019-10-17 09:46:04', '0', NULL ),
+( '49', '100', 'TextWidget', 'MUNICIPIO / ALCALDÍA', NULL, '0', '0', '50', '50', '43', '4', 'active', '1', NULL, '2019-10-17 09:47:36', '2019-10-17 09:47:36', '0', NULL ),
+( '50', '100', 'CatalogWidget', 'ENTIDAD FEDERATIVA', '3', '0', '0', '0', '100', '43', '4', 'active', '1', NULL, '2019-10-17 09:48:20', '2019-10-17 09:48:20', '0', NULL ),
+( '51', '100', 'TextWidget', 'CIUDAD / LOCALIDAD', NULL, '0', '0', '50', '50', '43', '6', 'active', '1', NULL, '2019-10-17 09:49:13', '2019-10-17 09:49:13', '0', NULL ),
+( '52', '100', 'TextWidget', 'ESTADO / PROVINCIA', NULL, '0', '0', '50', '50', '43', '6', 'active', '1', NULL, '2019-10-17 09:49:37', '2019-10-17 09:49:37', '0', NULL ),
+( '53', '100', 'CatalogWidget', 'PAÍS', '12', '0', '0', '0', '100', '43', '6', 'active', '1', NULL, '2019-10-17 09:50:03', '2019-10-17 09:50:03', '0', NULL ),
+( '54', '1', 'TextWidget', 'NOMBRE (S)', NULL, '0', '1', '50', '50', NULL, '3', 'active', '1', NULL, '2019-10-18 09:13:16', '2019-10-18 09:54:01', '0', NULL ),
+( '55', '2', 'TextWidget', 'PRIMER APELLIDO', NULL, '0', '0', '50', '50', NULL, '3', 'active', '1', NULL, '2019-10-18 09:13:55', '2019-10-18 09:54:01', '0', NULL ),
+( '56', '3', 'TextWidget', 'SEGUNDO APELLIDO', NULL, '0', '1', '50', '50', NULL, '3', 'active', '1', NULL, '2019-10-18 09:14:52', '2019-10-18 09:54:01', '0', NULL ),
+( '57', '4', 'DateWidget', 'FECHA DE NACIMIENTO', NULL, '0', '1', '0', '100', NULL, '3', 'active', '1', NULL, '2019-10-18 09:15:19', '2019-10-18 09:54:01', '0', NULL ),
+( '58', '5', 'TextWidget', 'RFC', NULL, '0', '1', '13', '13', NULL, '6', 'active', '1', NULL, '2019-10-18 09:15:51', '2019-10-18 09:54:01', '0', NULL ),
+( '59', '6', 'RadioWidget', 'RELACIÓN CON EL DECLARANTE', '19', '0', '1', '0', '100', NULL, '6', 'active', '1', NULL, '2019-10-18 09:23:31', '2019-10-18 09:54:01', '0', NULL ),
+( '60', '7', 'RadioWidget', '¿ES CIUDADANO EXTRANJERO?', '24', '0', '1', '0', '100', NULL, '6', 'active', '1', NULL, '2019-10-18 09:24:53', '2019-10-18 09:54:08', '0', NULL ),
+( '61', '9', 'RadioWidget', '¿ES DEPENDIENTE ECONÓMICO?', '24', '0', '1', '0', '100', NULL, '4', 'active', '1', NULL, '2019-10-18 09:27:17', '2019-10-18 09:54:02', '0', NULL ),
+( '62', '10', 'RadioWidget', 'LUGAR DONDE RESIDE', '25', '0', '1', '0', '100', NULL, '4', 'active', '1', NULL, '2019-10-18 09:50:54', '2019-10-18 09:54:02', '0', NULL ),
+( '63', '11', 'RadioWidget', '¿HABITA EN EL DOMICILIO DEL DECLARANTE?', '24', '0', '1', '0', '100', NULL, '4', 'active', '1', NULL, '2019-10-18 09:51:54', '2019-10-18 09:54:02', '0', NULL ),
+( '64', '100', 'TextWidget', 'CURP', NULL, '0', '1', '18', '18', '60', '12', 'active', '1', '2019-10-18 09:53:39', '2019-10-18 09:53:01', '2019-10-18 09:53:39', '0', NULL ),
+( '65', '8', 'TextWidget', 'CURP', NULL, '0', '1', '18', '18', NULL, '6', 'active', '1', NULL, '2019-10-18 09:53:57', '2019-10-18 09:54:02', '0', NULL ),
+( '66', '12', 'RadioWidget', 'DOMICILIO DE LA PAREJA', '23', '1', '1', '0', '100', NULL, '12', 'active', '1', NULL, '2019-10-18 09:55:08', '2019-10-18 09:57:34', '0', NULL ),
+( '67', '13', 'TextWidget', 'CALLE', NULL, '0', '1', '50', '50', NULL, '4', 'active', '1', NULL, '2019-10-18 09:55:38', '2019-10-18 09:57:34', '0', NULL ),
+( '68', '14', 'TextWidget', 'NÚMERO EXTERIOR', NULL, '0', '1', '50', '50', NULL, '4', 'active', '1', NULL, '2019-10-18 09:57:00', '2019-10-18 09:57:34', '0', NULL ),
+( '69', '15', 'TextWidget', 'NÚMERO INTERIOR', NULL, '0', '1', '50', '50', NULL, '4', 'active', '0', NULL, '2019-10-18 09:57:16', '2019-10-18 09:57:35', '0', NULL ),
+( '70', '100', 'TextWidget', 'COLONIA / LOCALIDAD', NULL, '0', '1', '50', '50', '66', '4', 'active', '1', NULL, '2019-10-18 09:58:05', '2019-10-18 09:58:05', '0', NULL ),
+( '71', '100', 'CatalogWidget', 'MUNICIPIO / ALCALDÍA', '9', '0', '1', '0', '100', '66', '4', 'active', '1', NULL, '2019-10-18 09:58:28', '2019-10-18 09:58:28', '0', NULL ),
+( '72', '100', 'CatalogWidget', 'ENTIDAD FEDERATIVA', '3', '0', '1', '0', '100', '66', '4', 'active', '1', NULL, '2019-10-18 09:58:44', '2019-10-18 09:58:44', '0', NULL ),
+( '73', '100', 'TextWidget', 'CIUDAD / LOCALIDAD', NULL, '0', '1', '50', '50', '66', '6', 'active', '1', NULL, '2019-10-18 09:59:33', '2019-10-18 09:59:33', '0', NULL ),
+( '74', '100', 'TextWidget', 'ESTADO / PROVINCIA', NULL, '0', '1', '50', '50', '66', '6', 'active', '1', NULL, '2019-10-18 09:59:53', '2019-10-18 09:59:53', '0', NULL ),
+( '75', '100', 'CatalogWidget', 'PAIS', '12', '0', '1', '0', '100', '66', '12', 'active', '1', NULL, '2019-10-18 10:00:10', '2019-10-18 10:00:10', '0', NULL ),
+( '76', '100', 'TextWidget', 'CÓDIGO POSTAL', NULL, '0', '1', '10', '10', NULL, '12', 'active', '1', NULL, '2019-10-18 10:00:51', '2019-10-18 10:00:51', '0', NULL ),
+( '77', '100', 'CatalogWidget', 'ACTIVIDAD LABORAL', '17', '1', '1', '0', '100', NULL, '12', 'active', '1', NULL, '2019-10-18 10:04:09', '2019-10-18 10:04:14', '0', NULL ),
+( '78', '100', 'TextWidget', 'ESPECIFIQUE', NULL, '0', '1', '50', '50', '77', '12', 'active', '1', NULL, '2019-10-18 10:04:35', '2019-10-18 10:04:35', '0', NULL ),
+( '79', '100', 'RadioWidget', 'NIVEL / ORDEN DE GOBIERNO', '1', '0', '1', '0', '100', NULL, '6', 'active', '1', '2019-10-18 10:12:06', '2019-10-18 10:07:40', '2019-10-18 10:12:06', '0', NULL ),
+( '80', '100', 'TextWidget', 'NOMBRE DEL ENTE PÚBLICO', NULL, '0', '1', '50', '50', NULL, '6', 'active', '1', '2019-10-18 10:12:08', '2019-10-18 10:08:10', '2019-10-18 10:12:08', '0', NULL ),
+( '81', '100', 'TextWidget', 'SALARIO MENSUAL NETO', NULL, '0', '1', '50', '50', NULL, '12', 'active', '1', '2019-10-18 10:12:10', '2019-10-18 10:08:35', '2019-10-18 10:12:10', '0', NULL ),
+( '82', '100', 'RadioWidget', 'ÁMBITO PÚBLICO', '15', '0', '1', '0', '100', NULL, '6', 'active', '1', '2019-10-18 10:12:13', '2019-10-18 10:10:09', '2019-10-18 10:12:13', '0', NULL ),
+( '83', '100', 'RadioWidget', 'NIVEL / ORDEN DE GOBIERNO', '1', '0', '1', '0', '100', '77', '6', 'active', '1', NULL, '2019-10-18 10:10:44', '2019-10-18 10:10:44', '0', NULL ),
+( '84', '100', 'TextWidget', 'NOMBRE DEL ENTE PÚBLICO', NULL, '0', '1', '50', '50', '77', '6', 'active', '1', NULL, '2019-10-18 10:11:12', '2019-10-18 10:11:12', '0', NULL ),
+( '85', '100', 'TextWidget', 'EMPLEO, CARGO O COMISIÓN', NULL, '0', '1', '50', '50', '77', '6', 'active', '1', NULL, '2019-10-18 10:11:41', '2019-10-18 10:11:41', '0', NULL ),
+( '86', '100', 'TextWidget', 'SALARIO MENSUAL NETO', NULL, '0', '1', '30', '30', '77', '6', 'active', '1', NULL, '2019-10-18 10:12:02', '2019-10-18 10:12:02', '0', NULL ),
+( '87', '100', 'RadioWidget', 'ÁMBITO PÚBLICO', '15', '0', '1', '0', '100', '77', '6', 'active', '1', NULL, '2019-10-18 10:13:36', '2019-10-18 10:13:36', '0', NULL ),
+( '88', '100', 'TextWidget', 'ÁREA DE ADSCRIPCIÓN', NULL, '0', '1', '50', '50', '77', '6', 'active', '1', NULL, '2019-10-18 10:13:56', '2019-10-18 10:13:56', '0', NULL ),
+( '89', '100', 'TextWidget', 'ESPECIFIQUE FUNCIÓN PRINCIPAL', NULL, '0', '1', '100', '100', '77', '6', 'active', '1', NULL, '2019-10-18 10:14:17', '2019-10-18 10:14:17', '0', NULL ),
+( '90', '100', 'DateWidget', 'FECHA DE INGRESO AL EMPLEO', NULL, '0', '1', '0', '100', '77', '6', 'active', '1', NULL, '2019-10-18 10:14:38', '2019-10-18 10:14:38', '0', NULL ),
+( '91', '100', 'TextWidget', 'NOMBRE DE LA EMPRESA, SOCIEDAD O ASOCIACIÓN', NULL, '0', '1', '50', '50', '77', '6', 'active', '1', NULL, '2019-10-18 10:15:43', '2019-10-18 10:15:43', '0', NULL ),
+( '92', '100', 'TextWidget', 'RFC', NULL, '0', '1', '15', '15', '77', '6', 'active', '1', NULL, '2019-10-18 10:16:11', '2019-10-18 10:16:11', '0', NULL ),
+( '93', '100', 'TextWidget', 'EMPLEO O CARGO', NULL, '0', '1', '50', '50', '77', '6', 'active', '1', NULL, '2019-10-18 10:16:48', '2019-10-18 10:16:48', '0', NULL ),
+( '94', '100', 'TextWidget', 'SALARIO MENSUAL NETO', NULL, '0', '1', '20', '20', '77', '6', 'active', '1', NULL, '2019-10-18 10:17:09', '2019-10-18 10:17:09', '0', NULL ),
+( '95', '100', 'RadioWidget', '¿ES PROVEEDOR O CONTRATISTA DEL GOBIERNO?', '24', '0', '1', '0', '100', '77', '6', 'active', '1', NULL, '2019-10-18 10:17:38', '2019-10-18 10:17:38', '0', NULL ),
+( '96', '100', 'TextareaWidget', 'ACLARACIONES / OBSERVACIONES', NULL, '0', '1', '0', '100', NULL, '12', 'active', '1', NULL, '2019-10-19 06:07:10', '2019-10-19 06:07:10', '0', NULL );
+-- ---------------------------------------------------------
+
+
+-- Dump data of "section_question" -------------------------
+-- ---------------------------------------------------------
+
+
+-- Dump data of "sections" ---------------------------------
+INSERT INTO `sections`(`id`,`index`,`name`,`declaration_type`,`slug`,`deleted_at`,`created_at`,`updated_at`) VALUES 
+( '1', '1', 'DATOS GENERALES', 'INICIAL', 'datos-generales', NULL, '2019-10-08 17:29:37', '2019-10-09 18:26:53' ),
+( '2', '2', 'DOMICILIO DEL DECLARANTE', 'INICIAL', 'domicilio-del-declarante', NULL, '2019-10-09 18:26:47', '2019-10-09 18:26:53' ),
+( '3', '100', 'ESCOLARIDAD', 'INICIAL', 'escolaridad', NULL, '2019-10-09 19:01:47', '2019-10-09 19:01:47' ),
+( '4', '100', 'DATOS DEL EMPLEO, CARGO O COMISIÓN QUE INICIA', 'INICIAL', 'datos-del-empleo-cargo-o-comision-que-inicia', NULL, '2019-10-17 09:13:33', '2019-10-17 09:13:33' ),
+( '5', '100', 'EXPERIENCIA LABORAL', 'INICIAL', 'experiencia-laboral', NULL, '2019-10-17 09:18:01', '2019-10-17 09:18:01' ),
+( '6', '100', 'DATOS DE LA PAREJA', 'INICIAL', 'datos-de-la-pareja', NULL, '2019-10-18 09:11:14', '2019-10-18 09:11:14' );
+-- ---------------------------------------------------------
+
+
+-- Dump data of "user_declarations" ------------------------
+-- ---------------------------------------------------------
+
+
+-- Dump data of "users" ------------------------------------
+INSERT INTO `users`(`id`,`username`,`name`,`firstname`,`lastname`,`type`,`user_verified_at`,`password`,`remember_token`,`deleted_at`,`created_at`,`updated_at`,`disabled`,`prop_linked`) VALUES 
+( '1', 'admin', 'admin', 'admin@hotmail.com', 'admin@hotmail.com', 'admin', NULL, '$2y$10$ENHOTo2HEHt9hIqazA/kBuX7uEOS7.T454rkdTdHwEXxDnCOjRR86', NULL, NULL, '2019-10-19 04:06:49', '2019-10-19 04:06:49', '0', NULL ),
+( '2', 'OIMA911017FU3', 'ABEL', 'ORIHUELA', 'MENDOZA', 'user', NULL, '$2y$10$y/M0fiRhq7JALYw.2J19d.IStn9Ha5/YYF5mdNFtufDp3y7TD79ja', NULL, NULL, '2019-10-19 04:11:43', '2019-10-19 04:11:43', '0', NULL );
+-- ---------------------------------------------------------
+
+
+-- CREATE INDEX "catalog_options_catalog_id_foreign" -----------
+CREATE INDEX `catalog_options_catalog_id_foreign` USING BTREE ON `catalog_options`( `catalog_id` );
+-- -------------------------------------------------------------
+
+
+-- CREATE INDEX "conditions_question_id_foreign" ---------------
+CREATE INDEX `conditions_question_id_foreign` USING BTREE ON `conditions`( `question_id` );
+-- -------------------------------------------------------------
+
+
+-- CREATE INDEX "declarations_user_id_foreign" -----------------
+CREATE INDEX `declarations_user_id_foreign` USING BTREE ON `declarations`( `user_id` );
+-- -------------------------------------------------------------
+
+
+-- CREATE INDEX "password_resets_username_index" ---------------
+CREATE INDEX `password_resets_username_index` USING BTREE ON `password_resets`( `username` );
+-- -------------------------------------------------------------
+
+
+-- CREATE INDEX "questions_catalog_id_foreign" -----------------
+CREATE INDEX `questions_catalog_id_foreign` USING BTREE ON `questions`( `catalog_id` );
+-- -------------------------------------------------------------
+
+
+-- CREATE INDEX "questions_parent_id_foreign" ------------------
+CREATE INDEX `questions_parent_id_foreign` USING BTREE ON `questions`( `parent_id` );
+-- -------------------------------------------------------------
+
+
+-- CREATE INDEX "section_question_question_id_foreign" ---------
+CREATE INDEX `section_question_question_id_foreign` USING BTREE ON `section_question`( `question_id` );
+-- -------------------------------------------------------------
+
+
+-- CREATE INDEX "section_question_section_id_foreign" ----------
+CREATE INDEX `section_question_section_id_foreign` USING BTREE ON `section_question`( `section_id` );
+-- -------------------------------------------------------------
+
+
+-- CREATE INDEX "user_declarations_declaration_id_foreign" -----
+CREATE INDEX `user_declarations_declaration_id_foreign` USING BTREE ON `user_declarations`( `declaration_id` );
+-- -------------------------------------------------------------
+
+
+-- CREATE INDEX "user_declarations_question_id_foreign" --------
+CREATE INDEX `user_declarations_question_id_foreign` USING BTREE ON `user_declarations`( `question_id` );
+-- -------------------------------------------------------------
+
+
+-- CREATE LINK "catalog_options_catalog_id_foreign" ------------
+ALTER TABLE `catalog_options`
+	ADD CONSTRAINT `catalog_options_catalog_id_foreign` FOREIGN KEY ( `catalog_id` )
+	REFERENCES `catalogs`( `id` )
+	ON DELETE Restrict
+	ON UPDATE Restrict;
+-- -------------------------------------------------------------
+
+
+-- CREATE LINK "conditions_question_id_foreign" ----------------
+ALTER TABLE `conditions`
+	ADD CONSTRAINT `conditions_question_id_foreign` FOREIGN KEY ( `question_id` )
+	REFERENCES `questions`( `id` )
+	ON DELETE Restrict
+	ON UPDATE Restrict;
+-- -------------------------------------------------------------
+
+
+-- CREATE LINK "declarations_user_id_foreign" ------------------
+ALTER TABLE `declarations`
+	ADD CONSTRAINT `declarations_user_id_foreign` FOREIGN KEY ( `user_id` )
+	REFERENCES `users`( `id` )
+	ON DELETE Restrict
+	ON UPDATE Restrict;
+-- -------------------------------------------------------------
+
+
+-- CREATE LINK "questions_catalog_id_foreign" ------------------
+ALTER TABLE `questions`
+	ADD CONSTRAINT `questions_catalog_id_foreign` FOREIGN KEY ( `catalog_id` )
+	REFERENCES `catalogs`( `id` )
+	ON DELETE Restrict
+	ON UPDATE Restrict;
+-- -------------------------------------------------------------
+
+
+-- CREATE LINK "questions_parent_id_foreign" -------------------
+ALTER TABLE `questions`
+	ADD CONSTRAINT `questions_parent_id_foreign` FOREIGN KEY ( `parent_id` )
+	REFERENCES `questions`( `id` )
+	ON DELETE Restrict
+	ON UPDATE Restrict;
+-- -------------------------------------------------------------
+
+
+-- CREATE LINK "section_question_question_id_foreign" ----------
+ALTER TABLE `section_question`
+	ADD CONSTRAINT `section_question_question_id_foreign` FOREIGN KEY ( `question_id` )
+	REFERENCES `questions`( `id` )
+	ON DELETE Restrict
+	ON UPDATE Restrict;
+-- -------------------------------------------------------------
+
+
+-- CREATE LINK "section_question_section_id_foreign" -----------
+ALTER TABLE `section_question`
+	ADD CONSTRAINT `section_question_section_id_foreign` FOREIGN KEY ( `section_id` )
+	REFERENCES `sections`( `id` )
+	ON DELETE Restrict
+	ON UPDATE Restrict;
+-- -------------------------------------------------------------
+
+
+-- CREATE LINK "user_declarations_declaration_id_foreign" ------
+ALTER TABLE `user_declarations`
+	ADD CONSTRAINT `user_declarations_declaration_id_foreign` FOREIGN KEY ( `declaration_id` )
+	REFERENCES `declarations`( `id` )
+	ON DELETE Restrict
+	ON UPDATE Restrict;
+-- -------------------------------------------------------------
+
+
+-- CREATE LINK "user_declarations_question_id_foreign" ---------
+ALTER TABLE `user_declarations`
+	ADD CONSTRAINT `user_declarations_question_id_foreign` FOREIGN KEY ( `question_id` )
+	REFERENCES `questions`( `id` )
+	ON DELETE Restrict
+	ON UPDATE Restrict;
+-- -------------------------------------------------------------
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- ---------------------------------------------------------
+
+

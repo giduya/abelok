@@ -1,0 +1,71 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "eslint": "eslint resources/js/** --fix",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": [
+            "prettier --write",
+            "git add",
+            "eslint --fix"
+        ]
+    },
+    "devDependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.5.5",
+        "@babel/preset-react": "^7.0.0",
+        "axios": "^0.18",
+        "babel-eslint": "^10.0.1",
+        "bootstrap": "^4.0.0",
+        "cross-env": "^5.1",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-plugin-import": "^2.17.2",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-react": "^7.13.0",
+        "husky": "^2.7.0",
+        "jquery": "^3.2",
+        "laravel-mix": "^4.0.7",
+        "lint-staged": "^8.1.6",
+        "lodash": "^4.17.15",
+        "popper.js": "^1.12",
+        "react": "^16.2.0",
+        "react-dom": "^16.9.0",
+        "resolve-url-loader": "^2.3.1",
+        "sass": "^1.15.2",
+        "sass-loader": "^7.1.0"
+    },
+    "dependencies": {
+        "baobab": "^2.5.2",
+        "baobab-react": "^4.0.0",
+        "bulma": "^0.7.5",
+        "classnames": "^2.2.6",
+        "eslint": "^6.2.2",
+        "font-awesome": "^4.7.0",
+        "json-rules-engine": "^4.0.0",
+        "moment": "^2.24.0",
+        "prop-types": "^15.7.2",
+        "qs": "^6.8.0",
+        "query-string": "^6.8.3",
+        "react-beautiful-dnd": "^11.0.5",
+        "react-datepicker": "^2.9.6",
+        "react-fontawesome": "^1.6.1",
+        "react-pdf": "^4.1.0",
+        "react-router": "^5.0.1",
+        "react-router-dom": "^5.0.1",
+        "react-spinkit": "^3.0.0",
+        "react-toastify": "^5.4.0",
+        "react-top-loading-bar": "^1.2.0",
+        "reactjs-pdf-reader": "^1.0.9"
+    }
+}
